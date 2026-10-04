@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1004 180" width="1004" height="180" role="img" aria-label="클라이언트 기능 개발은 요구사항 → 코드 작성 → 검증 → 완료로 가고, 검증에서 코드 작성으로 다시 돌아갑니다. 검증이 병목입니다.">
+<style>
+  text { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo','Noto Sans KR',Helvetica,Arial,sans-serif; }
+  .t { font-size:15px; font-weight:650; fill:#0f172a; }
+  .th { font-size:15px; font-weight:700; fill:#c2410c; }
+  .hot { font-size:11.5px; font-weight:600; fill:#c2410c; letter-spacing:0.4px; }
+  .s { font-size:12px; fill:#64748b; }
+  .l { font-size:11px; font-weight:600; fill:#94a3b8; letter-spacing:0.4px; }
+  .a { fill:none; stroke:#94a3b8; stroke-width:1.5; stroke-linecap:round; }
+</style>
+<defs>
+  <marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<rect x="0.5" y="0.5" width="1003" height="179" rx="18" fill="#f8fafc" stroke="#e2e8f0"/>
+<rect x="36" y="64" width="190" height="64" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/>
+<rect x="60" y="82" width="28" height="28" rx="7" fill="#7c3aed" fill-opacity="0.12"/><path d="M68 88 L76 88 L80 92 L80 104 L68 104 Z" stroke="#7c3aed" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="71" y1="97" x2="77" y2="97" stroke="#7c3aed" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="71" y1="101" x2="75" y2="101" stroke="#7c3aed" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text class="t" x="100" y="101">요구사항</text>
+<rect x="283" y="64" width="190" height="64" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/>
+<rect x="307" y="82" width="28" height="28" rx="7" fill="#2563eb" fill-opacity="0.12"/><path d="M318 91 L313 96 L318 101" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M324 91 L329 96 L324 101" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text class="t" x="347" y="101">코드 작성</text>
+<rect x="530" y="64" width="190" height="64" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="1.2"/>
+<rect x="554" y="82" width="28" height="28" rx="7" fill="#f97316" fill-opacity="0.12"/><circle cx="568" cy="96" r="8" stroke="#f97316" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M564 96 L567 99.5 L572.5 92.5" stroke="#f97316" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text class="th" x="594" y="101">검증</text>
+<rect x="778" y="64" width="190" height="64" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/>
+<rect x="802" y="82" width="28" height="28" rx="7" fill="#059669" fill-opacity="0.12"/><circle cx="816" cy="96" r="8" fill="#059669"/><path d="M812 96 L815 99.5 L820.5 92.5" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text class="t" x="842" y="101">완료</text>
+<path class="a" d="M226 96 L281 96" marker-end="url(#h)"/>
+<path class="a" d="M473 96 L528 96" marker-end="url(#h)"/>
+<path class="a" d="M720 96 L775 96" marker-end="url(#h)"/>
+<path class="a" d="M625 62 C625 22 378 22 378 60" marker-end="url(#h)"/>
+<text class="l" x="501" y="26" text-anchor="middle">반복</text>
+<text class="hot" x="625" y="152" text-anchor="middle">병목</text>
+</svg>

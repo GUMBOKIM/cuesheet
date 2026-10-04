@@ -1,0 +1,84 @@
+{
+  "name": "cuesheet",
+  "version": "1.0.2",
+  "description": "Mock API scenarios, response delay, a controllable clock and offline mode for browser apps — built on MSW, reproducible from a single link.",
+  "keywords": [
+    "msw",
+    "mock",
+    "mocking",
+    "api",
+    "scenario",
+    "testing",
+    "e2e",
+    "playwright",
+    "devtools"
+  ],
+  "license": "MIT",
+  "author": "GUMBOKIM (https://github.com/GUMBOKIM)",
+  "homepage": "https://github.com/GUMBOKIM/cuesheet#readme",
+  "bugs": "https://github.com/GUMBOKIM/cuesheet/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GUMBOKIM/cuesheet.git",
+    "directory": "packages/core"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "LICENSE",
+    "AGENTS.md",
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "@cuesheet/source": "./src/index.ts",
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:msw": "for v in msw2_1 msw2_4 msw2_8 msw2_11 msw2_14; do echo \"--- $v ---\"; CUESHEET_MSW=$v vitest run --config vitest.msw.config.ts || exit 1; done"
+  },
+  "dependencies": {
+    "@mswjs/interceptors": "^0.41.3"
+  },
+  "peerDependencies": {
+    "msw": "^2.1.3"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        },
+        "require": {
+          "types": "./dist/index.d.cts",
+          "default": "./dist/index.cjs"
+        }
+      },
+      "./package.json": "./package.json"
+    }
+  },
+  "devDependencies": {
+    "msw2_1": "npm:msw@2.1.3",
+    "msw2_11": "npm:msw@2.11.0",
+    "msw2_14": "npm:msw@2.14.7",
+    "msw2_4": "npm:msw@2.4.0",
+    "msw2_8": "npm:msw@2.8.0"
+  }
+}

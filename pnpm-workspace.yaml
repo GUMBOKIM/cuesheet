@@ -1,0 +1,9 @@
+packages:
+  - packages/*
+  - examples/*
+
+# esbuild needs its platform binary installed. msw's postinstall copies the service worker file,
+# but cuesheet doesn't use a service worker, so it is blocked
+allowBuilds:
+  esbuild: true
+  msw: false

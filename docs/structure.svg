@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1004 460" width="1004" height="460" role="img" aria-label="cuesheet structure">
+<style>
+  text { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo','Noto Sans KR',Helvetica,Arial,sans-serif; }
+  .t { font-size:14px; font-weight:650; fill:#0f172a; }
+  .s { font-size:11.5px; fill:#64748b; }
+  .ts { font-size:16px; font-weight:700; fill:#ffffff; }
+  .ss { font-size:12px; fill:#dbeafe; }
+  .l { font-size:11px; font-weight:600; fill:#94a3b8; letter-spacing:0.4px; }
+  .brand { font-size:14px; font-weight:800; fill:#2563eb; letter-spacing:-0.2px; }
+  .a { fill:none; stroke:#94a3b8; stroke-width:1.5; stroke-linecap:round; }
+  .d { stroke-dasharray:5 4; }
+</style>
+<defs>
+  <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient>
+  <marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<rect x="0.5" y="0.5" width="1003" height="459" rx="18" fill="#f8fafc" stroke="#e2e8f0"/>
+<rect x="226" y="126" width="508" height="306" rx="16" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.6"/>
+<g transform="translate(244 394) scale(0.171875)"><rect width="128" height="128" rx="28" fill="url(#brand)"/><rect x="30" y="24" width="68" height="80" rx="10" fill="#ffffff"/><rect x="42" y="40" width="44" height="7" rx="3.5" fill="#cbd5e1"/><rect x="42" y="60.5" width="44" height="7" rx="3.5" fill="#f97316"/><rect x="42" y="81" width="30" height="7" rx="3.5" fill="#cbd5e1"/><path d="M20 54.5 L33 64 L20 73.5 Z" fill="#f97316" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/></g>
+<text class="brand" x="274" y="410">cuesheet</text>
+<text class="l" x="480" y="36" text-anchor="middle">SET THE STATE</text>
+<rect x="250" y="50" width="140" height="52" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/><rect x="264" y="62.0" width="28" height="28" rx="7" fill="#2563eb" fill-opacity="0.12"/><rect x="270" y="72.0" width="9" height="8" rx="4" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="277" y="72.0" width="9" height="8" rx="4" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text class="t" x="302" y="81.0">?cue= link</text>
+<path class="a" d="M320 102 L320 164" marker-end="url(#h)"/>
+<rect x="410" y="50" width="140" height="52" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/><rect x="424" y="62.0" width="28" height="28" rx="7" fill="#7c3aed" fill-opacity="0.12"/><line x1="431" y1="72.0" x2="445" y2="72.0" stroke="#7c3aed" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="431" y1="80.0" x2="445" y2="80.0" stroke="#7c3aed" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="436" cy="72.0" r="2.4" fill="#7c3aed"/><circle cx="441" cy="80.0" r="2.4" fill="#7c3aed"/><text class="t" x="462" y="81.0">Panel</text>
+<path class="a" d="M480 102 L480 164" marker-end="url(#h)"/>
+<rect x="570" y="50" width="140" height="52" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/><rect x="584" y="62.0" width="28" height="28" rx="7" fill="#f97316" fill-opacity="0.12"/><path d="M595 71.0 L590 76.0 L595 81.0" stroke="#f97316" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M601 71.0 L606 76.0 L601 81.0" stroke="#f97316" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text class="t" x="622" y="81.0">Code API</text>
+<path class="a" d="M640 102 L640 164" marker-end="url(#h)"/>
+<rect x="250" y="166" width="460" height="64" rx="12" fill="url(#brand)"/>
+<text class="ts" x="480" y="194" text-anchor="middle">CueState</text>
+<text class="ss" x="480" y="214" text-anchor="middle">one state for scenarios, delay, clock and offline</text>
+<path class="a" d="M320 230 L320 266" marker-end="url(#h)"/>
+<rect x="250" y="268" width="140" height="104" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/><text class="t" x="266" y="325.0"></text>
+<rect x="306" y="282" width="28" height="28" rx="7" fill="#2563eb" fill-opacity="0.12"/><path d="M317 289 Q313 289 314 294 Q314 296 312 296 Q314 296 314 298 Q313 303 317 303" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M323 289 Q327 289 326 294 Q326 296 328 296 Q326 296 326 298 Q327 303 323 303" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text class="t" x="320" y="336" text-anchor="middle">API mock</text>
+<text class="s" x="320" y="354" text-anchor="middle">named MSW scenarios</text>
+<path class="a" d="M480 230 L480 266" marker-end="url(#h)"/>
+<rect x="410" y="268" width="140" height="104" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/><text class="t" x="426" y="325.0"></text>
+<rect x="466" y="282" width="28" height="28" rx="7" fill="#7c3aed" fill-opacity="0.12"/><path d="M472 294 Q480 287 488 294" stroke="#7c3aed" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M475.5 297.5 Q480 293.5 484.5 297.5" stroke="#7c3aed" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="480" cy="301" r="1.8" fill="#7c3aed"/>
+<text class="t" x="480" y="336" text-anchor="middle">Network</text>
+<text class="s" x="480" y="354" text-anchor="middle">delay · offline</text>
+<path class="a" d="M640 230 L640 266" marker-end="url(#h)"/>
+<rect x="570" y="268" width="140" height="104" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/><text class="t" x="586" y="325.0"></text>
+<rect x="626" y="282" width="28" height="28" rx="7" fill="#f97316" fill-opacity="0.12"/><circle cx="640" cy="296" r="7.5" stroke="#f97316" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M640 292 L640 296 L643.5 298" stroke="#f97316" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text class="t" x="640" y="336" text-anchor="middle">Clock</text>
+<text class="s" x="640" y="354" text-anchor="middle">frozen or running</text>
+<rect x="16" y="218" width="150" height="104" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/>
+<path d="M16 246 L166 246" stroke="#e2e8f0" stroke-width="1.2"/>
+<circle cx="32" cy="232" r="4" fill="#f87171"/>
+<circle cx="44" cy="232" r="4" fill="#fbbf24"/>
+<circle cx="56" cy="232" r="4" fill="#34d399"/>
+<text class="t" x="91" y="280" text-anchor="middle">Client app</text>
+<text class="s" x="91" y="299" text-anchor="middle">fetch · XHR · Date</text>
+<path class="a" d="M166 256 L224 256" marker-end="url(#h)"/>
+<text class="l" x="196" y="248" text-anchor="middle">request</text>
+<path class="a" d="M226 292 L168 292" marker-end="url(#h)"/>
+<text class="l" x="196" y="310" text-anchor="middle">response</text>
+<path class="a d" d="M734 198 L794 198" marker-end="url(#h)"/>
+<text class="l" x="764" y="190" text-anchor="middle">no match</text>
+<rect x="796" y="166" width="192" height="64" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2" stroke-dasharray="5 4"/><rect x="810" y="184.0" width="28" height="28" rx="7" fill="#64748b" fill-opacity="0.12"/><rect x="817" y="191.0" width="14" height="6" rx="2" stroke="#64748b" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="817" y="199.0" width="14" height="6" rx="2" stroke="#64748b" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text class="t" x="848" y="195.0">Real server</text><text class="s" x="848" y="212.0">no handler matched</text>
+<path class="a" d="M734 320 L794 320" marker-end="url(#h)"/>
+<text class="l" x="764" y="312" text-anchor="middle">answered</text>
+<rect x="796" y="288" width="192" height="64" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/><rect x="810" y="306.0" width="28" height="28" rx="7" fill="#2563eb" fill-opacity="0.12"/><circle cx="818" cy="315.0" r="1.3" fill="#2563eb"/><line x1="821" y1="315.0" x2="833" y2="315.0" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="818" cy="320.0" r="1.3" fill="#2563eb"/><line x1="821" y1="320.0" x2="833" y2="320.0" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="818" cy="325.0" r="1.3" fill="#2563eb"/><line x1="821" y1="325.0" x2="829" y2="325.0" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text class="t" x="848" y="317.0">Records</text><text class="s" x="848" y="334.0">what answered, and how</text>
+</svg>

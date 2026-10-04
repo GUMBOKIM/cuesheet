@@ -1,0 +1,27 @@
+{
+  "name": "cuesheet-monorepo",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.5.0",
+  "scripts": {
+    "build": "pnpm --filter \"./packages/*\" build",
+    "typecheck": "pnpm build && pnpm -r typecheck",
+    "test": "pnpm --filter \"./packages/*\" test",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "version:set": "pnpm --filter \"./packages/*\" exec npm version --no-git-tag-version",
+    "publish:dry": "pnpm --filter \"./packages/*\" publish --dry-run --no-git-checks",
+    "dev:react": "pnpm build && pnpm --filter cuesheet-example-react dev",
+    "e2e:react": "pnpm build && pnpm --filter cuesheet-example-react test:e2e",
+    "dev:next": "pnpm build && pnpm --filter cuesheet-example-nextjs dev",
+    "e2e:next": "pnpm build && pnpm --filter cuesheet-example-nextjs test:e2e"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.14",
+    "happy-dom": "^20.14.5",
+    "msw": "^2.7.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
