@@ -22,7 +22,7 @@
 **UI 패널**
 
 <p align="center">
-  <img src="./docs/assets/panel.png" width="560" alt="cuesheet 패널이 열린 예제 쿠폰 앱. 패널에서 API마다 시나리오를 고르고, 응답 지연과 오프라인을 켜고, cuesheet가 응답한 요청 기록을 봅니다.">
+  <img src="./docs/assets/panel.png" width="560" alt="cuesheet 패널이 열린 예제 쿠폰 앱. 왼쪽 패널에서 쿠폰 목록 API의 시나리오를 Empty로 고르자 오른쪽 앱에 빈 상태가 나옵니다. 패널 맨 아래에는 지금 상태를 링크로 복사하는 Copy URL 버튼이 있습니다.">
 </p>
 
 ## 왜 만들었나
@@ -141,7 +141,7 @@ await page.evaluate(() => window.__cuesheet__!.select('getCoupons', 'Server erro
   이렇게 실패하는 건 `select()`입니다. 링크에 같은 오타가 있으면 그 항목만 건너뛰고 화면은 열리며, 같은 이름 목록이 콘솔 경고로 남습니다. 콘솔을 읽는 에이전트(Chrome DevTools MCP, Playwright의 `page.on('console')`)는 이 경고를 보고 링크를 고쳐 다시 엽니다.
 
 - **상태 하나가 문자열 하나입니다.** 실패한 경우를 `?cue=` 값으로 리포트에 적어 두면, 사람은 그 링크로 같은 화면을 엽니다.
-- **지연 말고는 무작위가 없습니다.** 같은 링크는 몇 번을 열어도 같은 화면입니다.
+- **지연 말고는 무작위가 없습니다.** 같은 링크는 몇 번을 열어도 같은 조건(시나리오, 지연, 시각, 오프라인)으로 열립니다.
 
 에이전트에게 알려주는 건 한 줄이면 됩니다. `cuesheet` 패키지에 에이전트용 안내서가 함께 들어가니(`node_modules/cuesheet/AGENTS.md`), 프로젝트의 에이전트 지침에서 그 파일을 가리키기만 하면 됩니다. 안내서 자체는 [`packages/core/AGENTS.md`](./packages/core/AGENTS.md)이고, [`examples/react`](./examples/react)에는 에이전트용 변경 요청 네 개가 들어 있습니다.
 

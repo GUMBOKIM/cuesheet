@@ -22,7 +22,7 @@ The story behind it, and how it plays out with AI, QA and designers: [Handing Fr
 **UI panel**
 
 <p align="center">
-  <img src="./docs/assets/panel.png" width="560" alt="The example coupon app with the cuesheet panel open. The panel picks a scenario per API, toggles response delay and offline, and lists the requests cuesheet answered.">
+  <img src="./docs/assets/panel.png" width="560" alt="The example coupon app with the cuesheet panel open. With the coupon list API set to the Empty scenario in the panel on the left, the app on the right shows its empty state. At the bottom of the panel, the Copy URL button copies the current state as a link.">
 </p>
 
 ## Why
@@ -141,7 +141,7 @@ Both work from the browser side, without going through the app bundle, so an age
   `select()` throws this. A link with the same typo still opens, skipping that entry and logging the same names as a console warning, so an agent that reads the console (Chrome DevTools MCP, Playwright's `page.on('console')`) sees it and opens the right link.
 
 - **A whole state is one string.** An agent can put the `?cue=` value of a failing case in its report, and a person opens the same screen from it.
-- **Nothing is random except delay.** The same link opens the same screen every time.
+- **Nothing is random except delay.** The same link opens under the same conditions (scenarios, delay, clock, offline) every time.
 
 Pointing an agent at it takes one line: the `cuesheet` package ships a guide for agents (`node_modules/cuesheet/AGENTS.md`), so your project's agent instructions only have to name that file. The guide itself is [`packages/core/AGENTS.md`](./packages/core/AGENTS.md), and [`examples/react`](./examples/react) carries four change requests written for agents.
 
