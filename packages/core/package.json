@@ -1,6 +1,6 @@
 {
   "name": "cuesheet",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Mock API scenarios, response delay, a controllable clock and offline mode for browser apps — built on MSW, reproducible from a single link.",
   "keywords": [
     "msw",
