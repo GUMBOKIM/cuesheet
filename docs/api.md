@@ -61,7 +61,7 @@ conditional value such as `storage: typeof window === 'undefined' ? undefined : 
 | `stop()` | Stops intercepting and restores `fetch`, `XMLHttpRequest` and `Date` |
 
 - `applyUrlParams()`: other query parameters stay byte for byte.
-- `start()`: calling it again does nothing. Outside the browser (SSR, Node) it only logs a warning. Only one instance intercepts at a time: starting another stops the one that was running, moves `window.__cuesheet__` to it, and makes `patch()` / `select()` / `reset()` on the stopped one warn and do nothing until it starts again. Running 1.0.0 alongside a later copy on one page brings back the old problem of a second instance that never intercepts.
+- `start()`: calling it again does nothing. Outside the browser (SSR, Node) it only logs a warning. Only one instance intercepts at a time: starting another stops the one that was running, moves `window.__cuesheet__` to it (an instance that is only created leaves the handle on the running one), and makes `patch()` / `select()` / `reset()` on the stopped one warn and do nothing until it starts again. Running 1.0.0 alongside a later copy on one page brings back the old problem of a second instance that never intercepts.
 
 ### State
 

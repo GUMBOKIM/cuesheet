@@ -359,6 +359,10 @@ Next.js와 다른 설정은 [시작하기](./docs/getting-started.ko.md)를 보�
 pnpm install && pnpm dev:react     # http://localhost:5173
 ```
 
+## 피드백
+
+써 보셨다면, 잘 됐든 걸렸든 안 맞았든 [Discussions](https://github.com/GUMBOKIM/cuesheet/discussions)에 한 줄 남겨 주시면 큰 도움이 됩니다. 버그는 [Issues](https://github.com/GUMBOKIM/cuesheet/issues)로 보내 주세요.
+
 ## 기여하기
 
 [CONTRIBUTING.md](./CONTRIBUTING.md)를 보세요. 라이선스는 MIT입니다.

@@ -95,6 +95,10 @@ still ordinary MSW handlers.
   code that checks how much time has passed sees none: lodash `debounce` / `throttle` never call through,
   so a debounced search box or autosave does nothing. Use `time:.../running` on screens that depend on
   them, and keep the frozen clock for exact boundaries.
+- **A running clock starts over from its `time:` value each time it is applied.** Turning cuesheet off
+  and on, `stop()` then `start()`, or setting `time` again all put `Date.now()` back at that moment,
+  so the same link always opens at the same time. Code that compares timestamps across one of these
+  sees time go backwards.
 - **Answered requests don't appear in the DevTools Network panel**, because they never reach the
   network. Use the records or the panel's request list.
 - **Delay applies to what cuesheet answers or cuts off**, never to a request that goes to the real

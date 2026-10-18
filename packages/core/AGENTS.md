@@ -143,6 +143,8 @@ Poll for records (`expect.poll`) rather than reading them once right after a cli
   dates the app already read. `time:` is frozen by default; append `/running` to let it tick. Use a
   frozen clock for exact boundaries. A frozen clock stops `Date.now()`-based waits — lodash
   `debounce` / `throttle` never call through — so use `/running` on screens that debounce or autosave.
+  A running clock restarts from its `time:` value whenever it is applied again (cuesheet off then on,
+  `stop()` then `start()`, a new `time`).
 - **One instance answers at a time.** Starting a second instance stops the one that was running, and
   `window.__cuesheet__` follows the new one. Changes made through the stopped one are ignored with a warning.
 - **State outlives a reload** when the instance is given `window.localStorage` as its storage, so a reload keeps

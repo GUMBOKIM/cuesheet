@@ -359,6 +359,10 @@ For Next.js and other setups, see [Getting started](./docs/getting-started.md). 
 pnpm install && pnpm dev:react     # http://localhost:5173
 ```
 
+## Feedback
+
+Tried it? Whether it worked, got in the way or didn't fit, a line in [Discussions](https://github.com/GUMBOKIM/cuesheet/discussions) helps. Bugs go to [Issues](https://github.com/GUMBOKIM/cuesheet/issues).
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md). MIT licensed.
