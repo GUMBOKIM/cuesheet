@@ -1,6 +1,6 @@
 import type { Cuesheet } from 'cuesheet'
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
-import { getCoupons, redeemCoupon } from './api'
+import { ApiError, getCoupons, redeemCoupon } from './api'
 import { CouponItem } from './components/CouponItem'
 import type { Coupon } from './types'
 
@@ -66,7 +66,13 @@ export default function App({ cuesheet }: { cuesheet?: Cuesheet | undefined }) {
           : current,
       )
       setNotice(`Redeemed '${coupon.name}'`)
-    } catch {
+    } catch (cause) {
+      // 409 is only ever ALREADY_USED: used on another device, so reload to match the server
+      if (cause instanceof ApiError && cause.status === 409) {
+        setNotice('This coupon has already been used')
+        load()
+        return
+      }
       setNotice("Couldn't redeem the coupon")
     }
   }

@@ -7,6 +7,6 @@ import 'cuesheet'
 declare module 'cuesheet' {
   interface CueRegistry {
     "getCoupons": "OK" | "Empty" | "One" | "Many" | "Server error"
-    "redeemCoupon": "Success" | "Server error"
+    "redeemCoupon": "Success" | "Already used" | "Server error"
   }
 }

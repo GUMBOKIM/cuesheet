@@ -18,6 +18,16 @@ export default {
       }),
     },
     {
+      // Used on another device. The only 409 this API returns
+      scenario: 'Already used',
+      handler: http.post('/coupons/:id/redeem', () =>
+        HttpResponse.json(
+          { code: 'ALREADY_USED', message: 'This coupon has already been used' },
+          { status: 409 },
+        ),
+      ),
+    },
+    {
       scenario: 'Server error',
       handler: http.post('/coupons/:id/redeem', () =>
         HttpResponse.json({ message: 'Temporary error' }, { status: 500 }),
