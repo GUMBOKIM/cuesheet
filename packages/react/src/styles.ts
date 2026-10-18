@@ -89,6 +89,10 @@ export const CSS = `
   border-bottom: 1px solid var(--cue-gray-200);
 }
 .cue-title { font-size: 14px; font-weight: 700; }
+.cue-version { font: 11px/1 var(--cue-mono); color: var(--cue-gray-400); }
+.cue-link { font-size: 12px; color: var(--cue-gray-500); text-decoration: none; }
+.cue-link:hover { color: var(--cue-gray-900); text-decoration: underline; }
+.cue-link:focus-visible { outline: 3px solid var(--cue-blue-300); outline-offset: 1px; border-radius: 4px; }
 .cue-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 12px; }
 .cue-foot {
   display: flex;

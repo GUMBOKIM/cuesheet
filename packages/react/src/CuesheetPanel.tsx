@@ -4,6 +4,9 @@ import { readOpen, writeOpen } from './panelStorage'
 import { injectStyles } from './styles'
 import { useCueState } from './useCueState'
 
+/** Where the header's Feedback link goes — questions, ideas and "I tried it" notes all fit there */
+const FEEDBACK_URL = 'https://github.com/GUMBOKIM/cuesheet/discussions'
+
 export interface CuesheetPanelProps extends CuesheetSettingsProps {
   /** Which bottom corner of the screen to show it in. Default 'left' */
   position?: 'left' | 'right' | undefined
@@ -78,10 +81,18 @@ export function CuesheetPanel({ position = 'left', ...settingsProps }: CuesheetP
       {open && (
         <div className="cue-panel">
           <div className="cue-head">
-            <span className="cue-title">cuesheet</span>
-            <button type="button" className="cue-btn cue-btn-ghost" onClick={toggle}>
-              Close
-            </button>
+            <span className="cue-row">
+              <span className="cue-title">cuesheet</span>
+              <span className="cue-version">{__CUESHEET_VERSION__}</span>
+            </span>
+            <span className="cue-row">
+              <a className="cue-link" href={FEEDBACK_URL} target="_blank" rel="noreferrer">
+                Feedback ↗
+              </a>
+              <button type="button" className="cue-btn cue-btn-ghost" onClick={toggle}>
+                Close
+              </button>
+            </span>
           </div>
           <CuesheetSettings {...settingsProps} />
         </div>

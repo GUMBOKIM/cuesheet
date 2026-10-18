@@ -57,6 +57,15 @@ describe('CuesheetPanel', () => {
     expect(screen.getByText('My profile')).toBeTruthy()
   })
 
+  it('shows the version and a feedback link that opens in a new tab', () => {
+    setup()
+    fireEvent.click(screen.getByRole('button', { name: 'cue' }))
+    expect(screen.getByText(__CUESHEET_VERSION__)).toBeTruthy()
+    const link = screen.getByRole('link', { name: 'Feedback ↗' }) as HTMLAnchorElement
+    expect(link.href).toBe('https://github.com/GUMBOKIM/cuesheet/discussions')
+    expect(link.target).toBe('_blank')
+  })
+
   it('remembers the open state in the store the instance uses', async () => {
     window.localStorage.setItem('cuesheet:panel-open', 'true')
     setup({ storage: window.localStorage })
