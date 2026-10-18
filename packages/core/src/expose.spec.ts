@@ -43,6 +43,21 @@ describe('global exposure', () => {
     expect(window.__cuesheet__).toBeUndefined()
   })
 
+  it('an instance that is only created does not take the handle from the running one', () => {
+    const running = make()
+    running.start()
+    const idle = make()
+    try {
+      expect(window.__cuesheet__).toBe(running)
+      // Starting it is what hands the handle over
+      idle.start()
+      expect(window.__cuesheet__).toBe(idle)
+    } finally {
+      idle.stop()
+      running.stop()
+    }
+  })
+
   it('the global handle can control the state', () => {
     make()
     window.__cuesheet__?.patch({ delay: { min: 50, max: 50 } })

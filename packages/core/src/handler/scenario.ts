@@ -29,23 +29,20 @@ export function assertSelectable(handlers: CueHandler[], id: string, scenario: s
   }
 }
 
-/** The scenario a handler answers with: the selected one if it exists, otherwise the first. `undefined` for a single-response handler */
-export function effectiveScenario(meta: CueHandler, selected?: string): string | undefined {
+/**
+ * What a handler answers with: for a scenario array, the selected scenario or the first one if it doesn't
+ * exist, along with its name; for a single-response handler, that handler and no name
+ */
+export function selectHandler(
+  meta: CueHandler,
+  selected?: string,
+): { handler: HttpHandler; scenario?: string } {
   if (!isScenarioHandler(meta.handler)) {
-    return undefined
-  }
-  const matched = meta.handler.find((candidate) => candidate.scenario === selected) ?? meta.handler[0]
-  return matched?.scenario
-}
-
-/** Picks the HttpHandler to actually use. For a scenario array, the selected scenario, or the first one if none */
-export function selectHandler(meta: CueHandler, selected?: string): HttpHandler {
-  if (!isScenarioHandler(meta.handler)) {
-    return meta.handler
+    return { handler: meta.handler }
   }
   const matched = meta.handler.find((candidate) => candidate.scenario === selected) ?? meta.handler[0]
   if (isNil(matched)) {
     throw new Error(log.message(`handler '${meta.id}' has an empty scenario list`))
   }
-  return matched.handler
+  return { handler: matched.handler, scenario: matched.scenario }
 }

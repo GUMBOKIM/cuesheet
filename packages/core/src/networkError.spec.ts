@@ -1,5 +1,5 @@
 import { HttpResponse, http } from 'msw'
-import { afterEach, expect, it } from 'vitest'
+import { afterEach, expect, it, vi } from 'vitest'
 import { type Cuesheet, createCuesheet } from './createCuesheet'
 
 let cuesheet: Cuesheet | undefined
@@ -29,6 +29,34 @@ it('HttpResponse.error() in a scenario makes fetch reject like a network error',
   // Recorded as a failure, so a test waiting on the error path can find it
   expect(cuesheet.getRecords({ handlerId: 'redeem', failed: true })).toHaveLength(1)
   expect(cuesheet.getRecords({ handlerId: 'redeem', failed: false })).toHaveLength(0)
+})
+
+it('logs HttpResponse.error() as a failed request, not as status 0', async () => {
+  const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+  const group = vi.spyOn(console, 'groupCollapsed').mockImplementation(() => undefined)
+  try {
+    cuesheet = createCuesheet({
+      handlers: [
+        {
+          id: 'redeem',
+          label: 'Redeem',
+          path: '/redeem',
+          handler: http.post('/redeem', () => HttpResponse.error()),
+        },
+      ],
+      defaultEnabled: true,
+      expose: false,
+    })
+    cuesheet.start()
+    const recorded = cuesheet.waitForRequest({ handlerId: 'redeem' })
+    await fetch('/redeem', { method: 'POST' }).catch(() => undefined)
+    await recorded
+    await vi.waitFor(() => expect(warn).toHaveBeenCalledWith(expect.stringContaining('/redeem → failed')))
+    expect(group).not.toHaveBeenCalled()
+  } finally {
+    warn.mockRestore()
+    group.mockRestore()
+  }
 })
 
 it('offline waits out the delay before failing, like a connection that hangs then drops', async () => {

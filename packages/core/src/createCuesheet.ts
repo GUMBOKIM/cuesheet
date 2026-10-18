@@ -262,6 +262,8 @@ export function createCuesheet({
 }: CuesheetOptions): Cuesheet {
   assertValidHandlers(initialHandlers)
   let handlers = initialHandlers
+  /** The global key the instance is installed under, or undefined with `expose: false` */
+  const handle = expose === false ? undefined : typeof expose === 'string' ? expose : DEFAULT_GLOBAL_KEY
   const getHandlers = (): CueHandler[] => handlers
 
   // Resolved once and shared: the state store and anything else that persists something use the same object
@@ -270,7 +272,11 @@ export function createCuesheet({
   const resolve = createResolver({ getHandlers, state, baseUrl })
   // `record: false` keeps nothing and reads no bodies, but waitForRequest() and subscribeRecords() still work
   const recorder = createRecorder(
-    record === false ? { limit: 0, bodies: false } : typeof record === 'object' ? record : {},
+    record === false
+      ? { limit: 0, bodies: false }
+      : typeof record === 'object' && record !== null
+        ? record
+        : {},
   )
   const transport = createTransport({
     resolve,
@@ -342,15 +348,14 @@ export function createCuesheet({
       supplanted = false
       // Exposed at creation, but the handle must follow whichever instance answers: after a.start(),
       // b.start(), a.start() it would otherwise still be b, and a test driving it would change nothing
-      if (expose !== false) {
-        exposeGlobal(cuesheet, typeof expose === 'string' ? expose : DEFAULT_GLOBAL_KEY)
+      if (handle !== undefined) {
+        exposeGlobal(cuesheet, handle)
       }
       started = true
       syncClock()
       transport.start()
       // One line an agent reading the console can't miss, pointing at the way in
       if (log && isClient()) {
-        const handle = expose === false ? undefined : typeof expose === 'string' ? expose : DEFAULT_GLOBAL_KEY
         const mode = state.get().enabled ? 'on' : 'off'
         const count = `${handlers.length} handler${handlers.length === 1 ? '' : 's'}`
         logger.info(
@@ -459,7 +464,7 @@ export function createCuesheet({
         toCatalog(handlers),
         state.get(),
         toCueParam(state.get(), handlers),
-        expose === false ? 'cuesheet' : `window.${typeof expose === 'string' ? expose : DEFAULT_GLOBAL_KEY}`,
+        handle === undefined ? 'cuesheet' : `window.${handle}`,
       ),
 
     toShareUrl() {
@@ -469,8 +474,17 @@ export function createCuesheet({
     },
   }
 
-  if (expose !== false) {
-    exposeGlobal(cuesheet, typeof expose === 'string' ? expose : DEFAULT_GLOBAL_KEY)
+  // Exposed at creation, so it can be driven before start(). Not over a running instance, though: one that is
+  // only created (a story, a test helper, a setup module re-run) would take the handle from the one answering,
+  // and everything done through it would change nothing on screen
+  if (handle !== undefined && !heldByRunning(handle)) {
+    exposeGlobal(cuesheet, handle)
   }
   return cuesheet
+}
+
+/** Whether the global under `key` is the instance that is currently intercepting */
+function heldByRunning(key: string): boolean {
+  const running = (globalThis as RunningSlot)[RUNNING]?.owner
+  return isClient() && !isNil(running) && (window as unknown as Record<string, unknown>)[key] === running
 }

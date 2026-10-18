@@ -305,7 +305,10 @@ export function createRecorder({ limit = 100, bodies = true }: RecorderOptions =
      * "was this API called after clicking the button?" can be checked without flakiness.
      * Use `getRecords(matcher)` to find past ones.
      */
-    waitFor(matcher = {}, { timeout = 5000 } = {}) {
+    waitFor(matcher = {}, options = {}) {
+      // An untyped `null` (a driver's page.evaluate, the console) skips the parameter default, so it is caught
+      // here. `{ timeout: null }` still reaches waitTime(), which warns about it
+      const { timeout = 5000 } = options ?? {}
       // Checked before the promise exists, so a mistyped key throws where it was written, as getRecords() does.
       // Inside the executor it would only reject — and go unnoticed until someone awaits it
       assertMatcher(matcher)

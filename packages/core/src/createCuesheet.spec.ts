@@ -1235,10 +1235,50 @@ describe('baseUrl forms', () => {
     ['a relative path, as behind a dev proxy', '/api', `${window.location.origin}/api/me`],
     ['an upper-case host', 'https://API.example.com', 'https://api.example.com/me'],
     ['a default port', 'https://api.example.com:443/v1/', 'https://api.example.com/v1/me'],
+    ['the page origin itself', window.location.origin, `${window.location.origin}/me`],
   ])('matches %s', async (_, baseUrl, url) => {
     cuesheet = createCuesheet({ baseUrl, defaultEnabled: true, log: false, expose: false, handlers: me })
     cuesheet.start()
     await expect((await fetch(url)).json()).resolves.toEqual({ ok: 1 })
+  })
+
+  it('matches a handler written for the relative path when one before it misses, body intact', async () => {
+    const both: CueHandler[] = [
+      {
+        id: 'absolute',
+        label: 'Absolute',
+        path: '/other',
+        handler: http.post('https://api.example.com/other', () => HttpResponse.json({ from: 'absolute' })),
+      },
+      {
+        id: 'relative',
+        label: 'Relative',
+        path: '/echo',
+        handler: http.post('/echo', async ({ request }) => HttpResponse.json(await request.json())),
+      },
+    ]
+    cuesheet = createCuesheet({
+      baseUrl: 'https://api.example.com',
+      defaultEnabled: true,
+      log: false,
+      expose: false,
+      handlers: both,
+    })
+    cuesheet.start()
+    const response = await fetch('https://api.example.com/echo', { method: 'POST', body: '{"n":1}' })
+    await expect(response.json()).resolves.toEqual({ n: 1 })
+  })
+
+  it('treats record: null like the default rather than throwing', () => {
+    expect(() =>
+      createCuesheet({
+        handlers: me,
+        defaultEnabled: true,
+        log: false,
+        expose: false,
+        record: null as never,
+      }),
+    ).not.toThrow()
   })
 
   it('throws at creation on something that is not a URL', () => {

@@ -26,5 +26,5 @@ export interface CueHandler {
 export { collectHandlers } from './collect'
 export { type CueEntry, type ScenarioOption, toCatalog } from './meta'
 export type { CueRegistry, HandlerId, ScenarioName, ScenarioOf, SelectArgs } from './registry'
-export { assertSelectable, effectiveScenario, isScenarioHandler, selectHandler } from './scenario'
+export { assertSelectable, isScenarioHandler, selectHandler } from './scenario'
 export { assertValidHandlers } from './validate'

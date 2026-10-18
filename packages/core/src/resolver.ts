@@ -1,5 +1,5 @@
 import { getResponse, type HttpHandler } from 'msw'
-import { type CueHandler, effectiveScenario, selectHandler } from './handler'
+import { type CueHandler, selectHandler } from './handler'
 import type { StateStore } from './state'
 import type { CueResolution, CueResolutionMeta } from './transport'
 import { isClient, isNil } from './util/guards'
@@ -68,11 +68,14 @@ function sleep(ms: number, signal: AbortSignal): Promise<void> {
  * Normalizing the request instead of registering every handler twice (relative and absolute)
  * means no handler duplication and no access to MSW's internal resolver.
  */
-async function toOriginRelative(request: Request, base: string): Promise<Request> {
+/** `request.url` with the base swapped for the page origin */
+function originRelativeUrl(request: Request, base: string): string {
   const rest = request.url.slice(base.length)
   const origin = isClient() ? window.location.origin : 'http://localhost'
-  const url = `${origin}${rest.startsWith('/') ? rest : `/${rest}`}`
+  return `${origin}${rest.startsWith('/') ? rest : `/${rest}`}`
+}
 
+async function toOriginRelative(request: Request, url: string): Promise<Request> {
   // Carry over what the handler or the interceptor may look at. `mode` is left out: 'navigate' can't be constructed
   const init: RequestInit = {
     method: request.method,
@@ -128,21 +131,21 @@ export function createResolver({
 
     const active = getHandlers()
       .filter((meta) => current.api[meta.id]?.enabled)
-      .map((meta) => ({
-        id: meta.id,
-        // Recorded as the scenario that actually answered, so the default one is named too
-        scenario: effectiveScenario(meta, current.api[meta.id]?.scenario),
-        handler: selectHandler(meta, current.api[meta.id]?.scenario),
-      }))
+      // Recorded as the scenario that actually answered, so the default one is named too
+      .map((meta) => ({ id: meta.id, ...selectHandler(meta, current.api[meta.id]?.scenario) }))
     if (active.length === 0) {
       return undefined
     }
 
     // The request as it was sent, plus — under a base URL — the same request with the base stripped, since
-    // handlers are written with relative paths
-    const candidates: Request[] = [request]
-    if (!isNil(base) && isUnder(request.url, base)) {
-      candidates.push(await toOriginRelative(request, base))
+    // handlers are written with relative paths. That one copies the body, so it is built only once a handler
+    // misses the request as sent, and not at all when stripping the base changes nothing (base = page origin)
+    const relativeUrl =
+      !isNil(base) && isUnder(request.url, base) ? originRelativeUrl(request, base) : undefined
+    let relative: Promise<Request> | undefined
+    const candidates: Array<() => Request | Promise<Request>> = [() => request]
+    if (relativeUrl !== undefined && relativeUrl !== request.url) {
+      candidates.push(() => (relative ??= toOriginRelative(request, relativeUrl)))
     }
 
     // Check handlers one at a time and use the first match. They aren't passed all at once
@@ -155,7 +158,7 @@ export function createResolver({
     // say) would answer ahead of one declared before it that only matches the relative form
     for (const entry of active) {
       for (const candidate of candidates) {
-        const response = await matchOne(entry.handler, candidate.clone())
+        const response = await matchOne(entry.handler, (await candidate()).clone())
         if (isNil(response)) {
           continue
         }

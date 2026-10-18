@@ -14,8 +14,16 @@ export const httpLogger: CuePlugin = {
     const elapsed = Math.round(performance.now() - context.startedAt)
     const { method, url } = context.request
     const path = pathOf(url)
-    const payload = await readBody(context.request.clone(), 500)
-    const body = await readResponseBody(response, 500)
+    // A scenario returning `HttpResponse.error()` fails the app's fetch, so it is logged as the failure it is
+    if (response.type === 'error') {
+      log.warn(`${method} ${path} → failed (Network error)`)
+      return
+    }
+    // Side by side, so a slow request body and a slow response body don't add up
+    const [payload, body] = await Promise.all([
+      readBody(context.request.clone(), 500),
+      readResponseBody(response, 500),
+    ])
 
     log.groupCollapsed(`${method} ${path} → ${response.status} (${elapsed}ms)`)
     if (payload !== undefined) {

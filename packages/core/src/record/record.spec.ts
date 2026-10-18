@@ -180,6 +180,18 @@ describe('waitForRequest', () => {
     )
   })
 
+  it('takes null options as no options', async () => {
+    vi.useFakeTimers()
+    try {
+      const pending = createRecorder().waitFor({}, null as never)
+      pending.catch(() => undefined)
+      await vi.advanceTimersByTimeAsync(5000)
+      await expect(pending).rejects.toThrow(/within 5000ms/)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
   it('falls back to the default, with a warning, for a timeout that is not a number of 0 or more', async () => {
     vi.useFakeTimers()
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined)
