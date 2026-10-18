@@ -89,6 +89,13 @@ button:disabled {
   background: #fef3c7;
   color: #b45309;
 }
+.offline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+}
 .actions {
   display: flex;
   align-items: center;

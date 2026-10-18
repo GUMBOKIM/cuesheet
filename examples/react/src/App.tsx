@@ -7,7 +7,12 @@ import type { Coupon } from './types'
 /** The order this screen applies a coupon to. Fixed, since this is an example */
 export const ORDER_ID = 'A-1001'
 
-type Load<T> = { status: 'loading' } | { status: 'ok'; data: T } | { status: 'error'; message: string }
+type Load<T> =
+  | { status: 'loading' }
+  | { status: 'ok'; data: T }
+  | { status: 'error'; message: string }
+  /** The server couldn't answer at all (network error) — unlike 'error', where it answered with a failure */
+  | { status: 'offline' }
 
 /**
  * The control panel, loaded on the dev server only. `import.meta.env.DEV` is false in `vite build`, so the
@@ -39,9 +44,13 @@ export default function App({ cuesheet }: { cuesheet?: Cuesheet | undefined }) {
         }
       })
       .catch((cause: Error) => {
-        if (!controller.signal.aborted) {
-          setCoupons({ status: 'error', message: cause.message })
+        if (controller.signal.aborted) {
+          return
         }
+        // fetch throws a TypeError when no response came back; an error status is an ApiError
+        setCoupons(
+          cause instanceof TypeError ? { status: 'offline' } : { status: 'error', message: cause.message },
+        )
       })
   }, [])
 
@@ -94,6 +103,16 @@ export default function App({ cuesheet }: { cuesheet?: Cuesheet | undefined }) {
           <p className="error" role="alert">
             Couldn't load coupons ({coupons.message})
           </p>
+        )}
+        {coupons.status === 'offline' && (
+          <div className="offline">
+            <p className="error" role="alert">
+              You're offline
+            </p>
+            <button type="button" onClick={load}>
+              Retry
+            </button>
+          </div>
         )}
         {coupons.status === 'ok' && coupons.data.length === 0 && (
           <p className="empty">No coupons available</p>
