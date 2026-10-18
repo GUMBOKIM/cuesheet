@@ -1,5 +1,5 @@
 /**
- * Compile-time checks for patch() and record matchers against the generated types (src/cuesheet-env.d.ts). `pnpm typecheck` runs
+ * Compile-time checks for patch() and record matchers against the hand-written types (src/cuesheet-env.d.ts). `pnpm typecheck` runs
  * them; Playwright doesn't, since this isn't a spec file
  */
 import type { ApiPatch, CuePatch, RecordMatcher } from 'cuesheet'
