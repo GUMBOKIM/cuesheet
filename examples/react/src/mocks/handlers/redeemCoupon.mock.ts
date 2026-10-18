@@ -8,7 +8,12 @@ export default {
   handler: [
     {
       scenario: 'Success',
-      handler: http.post('/coupons/:id/redeem', ({ params }) => {
+      handler: http.post('/coupons/:id/redeem', async ({ params, request }) => {
+        // Like the real server: no order id, no redemption. Reading the body here doesn't affect the record
+        const body = (await request.json().catch(() => null)) as { orderId?: unknown } | null
+        if (typeof body?.orderId !== 'string') {
+          return HttpResponse.json({ message: 'orderId is required' }, { status: 400 })
+        }
         // Any coupon a list scenario can show, so Redeem works whichever list is selected
         const coupon = [...coupons, ...manyCoupons].find((candidate) => candidate.id === params.id)
         if (coupon === undefined) {

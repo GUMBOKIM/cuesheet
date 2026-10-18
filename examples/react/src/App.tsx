@@ -59,7 +59,7 @@ export default function App({ cuesheet }: { cuesheet?: Cuesheet | undefined }) {
   async function redeem(coupon: Coupon) {
     setNotice(null)
     try {
-      const updated = await redeemCoupon(coupon.id)
+      const updated = await redeemCoupon(coupon.id, ORDER_ID)
       setCoupons((current) =>
         current.status === 'ok'
           ? { ...current, data: current.data.map((item) => (item.id === updated.id ? updated : item)) }

@@ -27,6 +27,11 @@ export function getCoupons(signal?: AbortSignal): Promise<Coupon[]> {
   return request<Coupon[]>('/coupons', signal === undefined ? undefined : { signal })
 }
 
-export function redeemCoupon(id: string): Promise<Coupon> {
-  return request<Coupon>(`/coupons/${id}/redeem`, { method: 'POST' })
+/** `orderId` is the order the coupon is used for, for settlement. The server answers 400 without it */
+export function redeemCoupon(id: string, orderId: string): Promise<Coupon> {
+  return request<Coupon>(`/coupons/${id}/redeem`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ orderId }),
+  })
 }
