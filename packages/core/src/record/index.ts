@@ -3,6 +3,7 @@ import type { CuePlugin } from '../transport'
 import { discardBody, readBody, readResponseBody } from '../util/body'
 import { isNil } from '../util/guards'
 import * as log from '../util/log'
+import { pathOf } from '../util/path'
 
 /** Record of a single request cuesheet answered */
 export interface CueRecord {
@@ -214,7 +215,7 @@ export function createRecorder({ limit = 100, bodies = true }: RecorderOptions =
       requestId: context.requestId,
       method: context.request.method,
       url: context.request.url,
-      path: context.request.url.replace(/^https?:\/\/[^/]+/, ''),
+      path: pathOf(context.request.url),
       status: 0,
       durationMs: Math.round(performance.now() - context.startedAt),
       startedAt: context.startedAt,
@@ -254,6 +255,11 @@ export function createRecorder({ limit = 100, bodies = true }: RecorderOptions =
     async onResponse(context, response, carried) {
       const record = baseRecord(context, carried)
       record.status = response.status
+      // A scenario returning `HttpResponse.error()` fails the app's fetch the way a dropped connection does,
+      // but it arrives here as a response — with status 0 and no failure noted, `failed: true` would miss it
+      if (response.type === 'error') {
+        record.error = 'Network error'
+      }
       if (bodies) {
         const [requestBody, responseBody] = await Promise.all([
           readBody(context.request.clone()),

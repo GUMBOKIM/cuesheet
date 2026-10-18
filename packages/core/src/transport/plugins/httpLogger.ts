@@ -1,5 +1,6 @@
 import { readBody, readResponseBody } from '../../util/body'
 import * as log from '../../util/log'
+import { pathOf } from '../../util/path'
 import type { CuePlugin } from '../context'
 
 /**
@@ -12,7 +13,7 @@ export const httpLogger: CuePlugin = {
   async onResponse(context, response) {
     const elapsed = Math.round(performance.now() - context.startedAt)
     const { method, url } = context.request
-    const path = url.replace(/^https?:\/\/[^/]+/, '')
+    const path = pathOf(url)
     const payload = await readBody(context.request.clone(), 500)
     const body = await readResponseBody(response, 500)
 
@@ -25,7 +26,7 @@ export const httpLogger: CuePlugin = {
   },
 
   onError(context, error) {
-    const path = context.request.url.replace(/^https?:\/\/[^/]+/, '')
+    const path = pathOf(context.request.url)
     log.warn(`${context.request.method} ${path} → failed (${error.message})`)
   },
 }

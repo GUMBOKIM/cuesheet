@@ -26,6 +26,9 @@ it('HttpResponse.error() in a scenario makes fetch reject like a network error',
   )
   expect(failure).toBeInstanceOf(TypeError)
   await expect(recorded).resolves.toMatchObject({ status: 0 })
+  // Recorded as a failure, so a test waiting on the error path can find it
+  expect(cuesheet.getRecords({ handlerId: 'redeem', failed: true })).toHaveLength(1)
+  expect(cuesheet.getRecords({ handlerId: 'redeem', failed: false })).toHaveLength(0)
 })
 
 it('offline waits out the delay before failing, like a connection that hangs then drops', async () => {

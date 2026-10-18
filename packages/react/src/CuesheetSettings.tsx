@@ -36,6 +36,15 @@ function toLocalInput(iso: string): string {
   return `${ymd}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`
 }
 
+/** Whether `pathname` is `page` or a page under it — `/check` covers `/check/1`, not `/checkout` */
+function isOnPage(pathname: string, page: string): boolean {
+  if (page === '/' || page === '') {
+    return pathname === '/' || pathname === ''
+  }
+  const base = page.endsWith('/') ? page.slice(0, -1) : page
+  return pathname === base || pathname.startsWith(`${base}/`)
+}
+
 function fromLocalInput(value: string): string | undefined {
   const date = new Date(value)
   return Number.isNaN(date.getTime()) ? undefined : date.toISOString()
@@ -79,7 +88,7 @@ export function CuesheetSettings({ cuesheet, pathname, onChange }: CuesheetSetti
         pathname !== undefined &&
         entry.pages !== undefined &&
         entry.pages.length > 0 &&
-        !entry.pages.some((page) => pathname.startsWith(page))
+        !entry.pages.some((page) => isOnPage(pathname, page))
       ) {
         return false
       }
@@ -145,8 +154,12 @@ export function CuesheetSettings({ cuesheet, pathname, onChange }: CuesheetSetti
                 step={1}
                 value={time === null ? '' : toLocalInput(time.now)}
                 onChange={(event) => {
+                  // The field reports '' while one of its segments is half typed. Taking that as "clear" would
+                  // drop the clock and its mode mid-edit, so only the Reset button clears it
                   const now = fromLocalInput(event.target.value)
-                  update({ time: now === undefined ? null : { now, mode: time?.mode ?? 'frozen' } })
+                  if (now !== undefined) {
+                    update({ time: { now, mode: time?.mode ?? 'frozen' } })
+                  }
                 }}
               />
               <div className="cue-row">

@@ -130,6 +130,35 @@ describe('CuesheetPanel', () => {
     expect(screen.getByText('My profile')).toBeTruthy()
   })
 
+  it('matches pages by path segment, not by prefix', () => {
+    const paged: CueHandler[] = [
+      {
+        id: 'getHome',
+        label: 'Home feed',
+        path: '/feed',
+        pages: ['/'],
+        handler: http.get('/feed', () => HttpResponse.json([])),
+      },
+      {
+        id: 'getCheck',
+        label: 'Check status',
+        path: '/check',
+        pages: ['/check'],
+        handler: http.get('/check', () => HttpResponse.json({})),
+      },
+    ]
+    const cuesheet = createCuesheet({ handlers: paged, defaultEnabled: true, log: false, expose: false })
+    const { rerender } = render(<CuesheetPanel cuesheet={cuesheet} pathname="/checkout" />)
+    fireEvent.click(screen.getByRole('button', { name: 'cue' }))
+    // '/' is the home page only, and '/check' doesn't cover '/checkout'
+    expect(screen.queryByText('Home feed')).toBeNull()
+    expect(screen.queryByText('Check status')).toBeNull()
+
+    rerender(<CuesheetPanel cuesheet={cuesheet} pathname="/check/42" />)
+    expect(screen.getByText('Check status')).toBeTruthy()
+    expect(screen.queryByText('Home feed')).toBeNull()
+  })
+
   it('keeps a handler whose pages are empty under the page filter', async () => {
     // `pages: []` means "no pages given", which is how the Common/This page grouping already reads it.
     // The filter used to read it as "belongs to no page" and hide the handler from the list entirely
@@ -206,6 +235,17 @@ describe('Clock', () => {
     expect(field.value).toBe('2026-01-31T23:59:59')
     fireEvent.change(field, { target: { value: '2026-02-01T00:00:01' } })
     expect(cuesheet.getState().time?.now).toBe(new Date(2026, 1, 1, 0, 0, 1).toISOString())
+  })
+
+  it('keeps the clock while a segment of the field is half typed', () => {
+    const cuesheet = setup()
+    const time = { now: new Date(2026, 0, 15, 9, 0, 0).toISOString(), mode: 'running' as const }
+    cuesheet.patch({ time })
+    fireEvent.click(screen.getByRole('button', { name: 'cue' }))
+    const field = document.querySelector('input[type="datetime-local"]') as HTMLInputElement
+    // What the browser reports after the hour is backspaced
+    fireEvent.change(field, { target: { value: '' } })
+    expect(cuesheet.getState().time).toEqual(time)
   })
 })
 
